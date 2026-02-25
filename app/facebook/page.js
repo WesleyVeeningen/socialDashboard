@@ -63,6 +63,7 @@ export default async function FacebookPage() {
                 comments={post.comments}
                 shares={post.shares}
                 color="var(--facebook)"
+                postId={post.id}
               />
             ))}
           </div>

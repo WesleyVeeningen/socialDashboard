@@ -65,6 +65,7 @@ export default async function InstagramPage() {
                 comments={post.comments_count}
                 imageUrl={post.media_url}
                 color="var(--instagram)"
+                postId={post.id}
               />
             ))}
           </div>
