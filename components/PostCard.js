@@ -1,6 +1,11 @@
-import Image from "next/image";
+"use client";
 
-export default function PostCard({ platform, message, date, likes, comments, shares, imageUrl, color }) {
+import { useState } from "react";
+import Image from "next/image";
+import CommentsPanel from "./CommentsPanel";
+
+export default function PostCard({ platform, message, date, likes, comments, shares, imageUrl, color, postId }) {
+  const [showComments, setShowComments] = useState(false);
   const formattedDate = date
     ? new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
     : "";
@@ -31,7 +36,19 @@ export default function PostCard({ platform, message, date, likes, comments, sha
               {shares.toLocaleString()}
             </span>
           )}
+          {postId && (
+            <button
+              className="toggle-comments-btn"
+              style={{ color }}
+              onClick={() => setShowComments((v) => !v)}
+            >
+              {showComments ? "Hide Comments" : `View Comments`}
+            </button>
+          )}
         </div>
+        {showComments && postId && (
+          <CommentsPanel postId={postId} platform={platform} color={color} />
+        )}
       </div>
 
       <style>{`
@@ -78,6 +95,17 @@ export default function PostCard({ platform, message, date, likes, comments, sha
           gap: 5px;
           font-size: 13px;
           color: var(--text-secondary);
+        }
+        .toggle-comments-btn {
+          margin-left: auto;
+          background: none;
+          border: none;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          padding: 0;
+          text-decoration: underline;
+          text-underline-offset: 2px;
         }
       `}</style>
     </>

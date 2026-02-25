@@ -64,6 +64,7 @@ export default async function TwitterPage() {
                 comments={tweet.public_metrics?.reply_count}
                 shares={tweet.public_metrics?.retweet_count}
                 color="var(--twitter)"
+                postId={tweet.id}
               />
             ))}
           </div>
