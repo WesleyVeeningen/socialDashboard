@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import CommentsPanel from "./CommentsPanel";
 
 export default function PostCard({ platform, message, date, likes, comments, shares, imageUrl, color, postId, postUrl }) {
   const [showComments, setShowComments] = useState(false);
+  const [localCommentCount, setLocalCommentCount] = useState(comments ?? 0);
+
+  useEffect(() => {
+    setLocalCommentCount(comments ?? 0);
+  }, [comments]);
+
+  const handleCommentAdded = () => setLocalCommentCount((c) => c + 1);
   const formattedDate = date
     ? new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
     : "";
@@ -60,7 +67,7 @@ export default function PostCard({ platform, message, date, likes, comments, sha
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--accent-blue)" }}>
                   <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
                 </svg>
-                <span>{(comments ?? 0).toLocaleString()}</span>
+                <span>{localCommentCount.toLocaleString()}</span>
               </span>
 
               {shares !== undefined && (
@@ -111,7 +118,7 @@ export default function PostCard({ platform, message, date, likes, comments, sha
 
           {/* Comments panel */}
           {showComments && postId && (
-            <CommentsPanel postId={postId} platform={platform} color={color} postUrl={postUrl} />
+            <CommentsPanel postId={postId} platform={platform} color={color} postUrl={postUrl} onCommentAdded={handleCommentAdded} />
           )}
         </div>
       </div>
