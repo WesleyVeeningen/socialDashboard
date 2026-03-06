@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function CommentsPanel({ postId, platform, color }) {
+export default function CommentsPanel({ postId, platform, color, postUrl }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reply, setReply] = useState("");
@@ -111,6 +111,17 @@ export default function CommentsPanel({ postId, platform, color }) {
           >
             {submitting ? "Posting…" : "Post Reply"}
           </button>
+          {postUrl && (
+            <a
+              href={postUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cp-platform-link"
+              style={{ color }}
+            >
+              Open on {platform} ↗
+            </a>
+          )}
         </form>
       </div>
 
@@ -151,6 +162,13 @@ export default function CommentsPanel({ postId, platform, color }) {
           align-self: flex-end;
         }
         .cp-submit:disabled { opacity: 0.5; cursor: default; }
+        .cp-platform-link {
+          font-size: 12px;
+          font-weight: 600;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          align-self: flex-end;
+        }
       `}</style>
     </>
   );

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import CommentsPanel from "./CommentsPanel";
 
-export default function PostCard({ platform, message, date, likes, comments, shares, imageUrl, color, postId }) {
+export default function PostCard({ platform, message, date, likes, comments, shares, imageUrl, color, postId, postUrl }) {
   const [showComments, setShowComments] = useState(false);
   const formattedDate = date
     ? new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
@@ -45,9 +45,20 @@ export default function PostCard({ platform, message, date, likes, comments, sha
               {showComments ? "Hide Comments" : `View Comments`}
             </button>
           )}
+          {postUrl && (
+            <a
+              href={postUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="post-view-link"
+              style={{ color }}
+            >
+              View on {platform} ↗
+            </a>
+          )}
         </div>
         {showComments && postId && (
-          <CommentsPanel postId={postId} platform={platform} color={color} />
+          <CommentsPanel postId={postId} platform={platform} color={color} postUrl={postUrl} />
         )}
       </div>
 
@@ -106,6 +117,13 @@ export default function PostCard({ platform, message, date, likes, comments, sha
           padding: 0;
           text-decoration: underline;
           text-underline-offset: 2px;
+        }
+        .post-view-link {
+          font-size: 12px;
+          font-weight: 600;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          white-space: nowrap;
         }
       `}</style>
     </>
