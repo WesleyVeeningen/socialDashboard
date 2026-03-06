@@ -48,6 +48,31 @@ const navItems = [
   },
 ];
 
+const contentItems = [
+  {
+    href: "/feed",
+    label: "Feed",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 11a9 9 0 019 9" /><path d="M4 4a16 16 0 0116 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    ),
+    color: "var(--accent-blue)",
+  },
+  {
+    href: "/news",
+    label: "Nieuws",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2" />
+        <path d="M18 14h-8M15 18h-5M10 6h8v4h-8z" />
+      </svg>
+    ),
+    color: "var(--accent-purple)",
+  },
+];
+
 export default function Sidebar() {
   const pathname = usePathname();
 
@@ -64,6 +89,23 @@ export default function Sidebar() {
         <nav className="sidebar-nav">
           <p className="nav-section-label">PLATFORMS</p>
           {navItems.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`nav-item${active ? " active" : ""}`}
+                style={active && item.color ? { color: item.color, borderColor: item.color } : {}}
+              >
+                <span className="nav-icon" style={item.color ? { color: item.color } : {}}>
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+          <p className="nav-section-label" style={{ marginTop: 16 }}>CONTENT</p>
+          {contentItems.map((item) => {
             const active = pathname === item.href;
             return (
               <Link
