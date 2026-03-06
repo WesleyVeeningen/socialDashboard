@@ -21,17 +21,17 @@ export default async function NewsPage() {
       postUrl: p.url,
       color: "var(--facebook)",
     })),
-    ...(tw.recentTweets ?? []).map((t) => ({
-      id: t.id,
-      platform: "Twitter / X",
-      message: t.text,
-      date: t.created_at,
-      likes: t.public_metrics?.like_count,
-      comments: t.public_metrics?.reply_count,
-      shares: t.public_metrics?.retweet_count,
-      postUrl: t.url,
-      color: "var(--twitter)",
-    })),
+    // ...(tw.recentTweets ?? []).map((t) => ({
+    //   id: t.id,
+    //   platform: "Twitter / X",
+    //   message: t.text,
+    //   date: t.created_at,
+    //   likes: t.public_metrics?.like_count,
+    //   comments: t.public_metrics?.reply_count,
+    //   shares: t.public_metrics?.retweet_count,
+    //   postUrl: t.url,
+    //   color: "var(--twitter)",
+    // })),
   ].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 
   return (

@@ -7,7 +7,7 @@ export default function FeedView({ posts, title = "Feed", reportLabel = "" }) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [keyword, setKeyword] = useState("");
-  const [platforms, setPlatforms] = useState({ Facebook: true, Twitter: true });
+  const [platforms, setPlatforms] = useState({ Facebook: true }); // Twitter: true 
 
   const togglePlatform = (name) =>
     setPlatforms((prev) => ({ ...prev, [name]: !prev[name] }));
@@ -104,7 +104,7 @@ export default function FeedView({ posts, title = "Feed", reportLabel = "" }) {
         </div>
         <div className="filter-row filter-row-bottom">
           <div className="platform-toggles">
-            {["Facebook", "Twitter"].map((name) => (
+            {["Facebook"].map((name) => ( // "Twitter" can be added back when Twitter/X API access is set up
               <button
                 key={name}
                 className={`platform-toggle ${platforms[name] ? "active" : ""}`}
