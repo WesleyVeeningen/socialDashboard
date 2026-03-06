@@ -25,6 +25,8 @@ function timeAgo(dateStr) {
 
 function CommentItem({ comment, color, onReply, replyingTo, replyText, setReplyText, replySubmitting, replyError, onSubmitReply, onCancelReply }) {
   const isReplying = replyingTo === comment.id;
+  const [repliesOpen, setRepliesOpen] = useState(false);
+  const replyCount = comment.replies?.length ?? 0;
 
   return (
     <div className="ci-wrap">
@@ -46,6 +48,18 @@ function CommentItem({ comment, color, onReply, replyingTo, replyText, setReplyT
                 </svg>
                 {comment.likes}
               </span>
+            )}
+            {replyCount > 0 && (
+              <button
+                className="ci-reply-btn"
+                style={repliesOpen ? { color } : {}}
+                onClick={() => setRepliesOpen((o) => !o)}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                </svg>
+                {repliesOpen ? "Hide" : `${replyCount}`} {replyCount === 1 ? "reply" : "replies"}
+              </button>
             )}
             <button
               className="ci-reply-btn"
@@ -92,6 +106,35 @@ function CommentItem({ comment, color, onReply, replyingTo, replyText, setReplyT
                 </button>
               </div>
             </form>
+          )}
+
+          {repliesOpen && replyCount > 0 && (
+            <div className="ci-replies">
+              {comment.replies.map((reply) => (
+                <div key={reply.id} className="ci-reply-item">
+                  <div className="ci-avatar ci-reply-avatar" style={{ background: `${color}22`, color }}>
+                    {getInitials(reply.author)}
+                  </div>
+                  <div className="ci-body">
+                    <div className="ci-header">
+                      <span className="ci-author">{reply.author}</span>
+                      <span className="ci-time">{timeAgo(reply.created_time)}</span>
+                    </div>
+                    <p className="ci-text">{reply.text}</p>
+                    {reply.likes > 0 && (
+                      <div className="ci-actions" style={{ marginTop: 4 }}>
+                        <span className="ci-likes">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ color: "#f45b69" }}>
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                          </svg>
+                          {reply.likes}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -471,6 +514,27 @@ export default function CommentsPanel({ postId, platform, color, postUrl, onComm
           transition: opacity 0.15s;
         }
         .ci-submit-btn:disabled { opacity: 0.45; cursor: default; }
+
+        /* Nested replies */
+        .ci-replies {
+          margin-top: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          padding-left: 12px;
+          border-left: 2px solid var(--border);
+          animation: cp-fadein 0.15s ease;
+        }
+        .ci-reply-item {
+          display: flex;
+          gap: 8px;
+          align-items: flex-start;
+        }
+        .ci-reply-avatar {
+          width: 26px !important;
+          height: 26px !important;
+          font-size: 10px !important;
+        }
 
         /* New comment form */
         .cp-new-form {
