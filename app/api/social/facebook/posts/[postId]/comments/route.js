@@ -8,10 +8,10 @@ export async function GET(request, { params }) {
 
 export async function POST(request, { params }) {
   const { postId } = await params;
-  const { message } = await request.json();
+  const { message, replyTo } = await request.json();
   if (!message?.trim()) {
     return Response.json({ success: false, error: "Message is required" }, { status: 400 });
   }
-  const result = await postFacebookComment(postId, message);
+  const result = await postFacebookComment(postId, message, replyTo ?? null);
   return Response.json(result, { status: result.success ? 200 : 400 });
 }
