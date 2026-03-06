@@ -99,7 +99,7 @@ function CommentItem({ comment, color, onReply, replyingTo, replyText, setReplyT
   );
 }
 
-export default function CommentsPanel({ postId, platform, color, postUrl }) {
+export default function CommentsPanel({ postId, platform, color, postUrl, onCommentAdded }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newComment, setNewComment] = useState("");
@@ -155,6 +155,7 @@ export default function CommentsPanel({ postId, platform, color, postUrl }) {
         setNewComment("");
         setSuccessMsg("Comment posted!");
         setTimeout(() => setSuccessMsg(null), 3000);
+        onCommentAdded?.();
         await fetchComments();
       }
     } catch {
@@ -183,6 +184,7 @@ export default function CommentsPanel({ postId, platform, color, postUrl }) {
         setReplyingTo(null);
         setSuccessMsg("Reply posted!");
         setTimeout(() => setSuccessMsg(null), 3000);
+        onCommentAdded?.();
         await fetchComments();
       }
     } catch {
