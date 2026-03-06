@@ -1,11 +1,11 @@
 :root {
-  --bg-primary: #0f1117;
-  --bg-secondary: #1a1d2e;
-  --bg-card: #1e2236;
-  --bg-card-hover: #252840;
-  --border: #2e3250;
-  --text-primary: #e8eaf6;
-  --text-secondary: #8f94c0;
+  --bg-primary: #0c0e1a;
+  --bg-secondary: #151829;
+  --bg-card: #1c1f35;
+  --bg-card-hover: #22263e;
+  --border: #2a2f52;
+  --text-primary: #eceef8;
+  --text-secondary: #8a8fb8;
   --accent-blue: #4f8ef7;
   --accent-purple: #9c6dff;
   --facebook: #1877f2;
@@ -14,7 +14,9 @@
   --success: #34c78a;
   --warning: #f5a623;
   --danger: #f45b69;
-  --sidebar-width: 220px;
+  --sidebar-width: 228px;
+  --radius-card: 14px;
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.35);
 }
 
 * {
